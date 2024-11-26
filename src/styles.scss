@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "fonts";
+@import "margins";
 
 :root {
   --dark-color: #000000;
   --light-color: #FFFFFF;
   --primary-color: #AE7AFF;
+  --gray-color: #5F646D;
 }
 *,
 *::before,
@@ -18,6 +20,7 @@ body {
   font-family: "JetBrains Mono", sans-serif;
   background: var(--dark-color);
   color: var(--light-color);
+  background-image: url(/assets/img/background.jpg);
 }
 .skill-tag {
   padding: 4px 8px;
@@ -29,20 +32,69 @@ body {
   height: 24px;
 }
 .btn {
-  border: none;
   background: var(--primary-color);
   color: var(--dark-color);
   padding: 10px 20px;
   font-weight: 700;
   font-size: 14px;
   line-height: 24px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid var(--dark-color);
 }
-.h6 {
-  font-size: 18px;
-  line-height: 24px;
-  font-weight: 800;
-}
-.subtitle {
-  font-size: 14px;
-  line-height: 20px;
-}
+.btn-shadow {
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: -4px;
+    right: -4px;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background: var(--gray-color);
+   }
+  }
+
+  .h1 {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 56px;
+  }
+
+  .h6 {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 800;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .tt-control-label {
+    display: block;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .tt-input {
+    width: 100%;
+    margin-top: 8px;
+    display: block;
+    border: 1px solid var(--light-color);
+    border-radius: 4px;
+    padding: 12px 20px;
+    background: var(--dark-color);
+    color: var(--light-color);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: "JetBrains Mono", sans-serif;
+  }
+
