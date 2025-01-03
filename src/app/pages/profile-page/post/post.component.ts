@@ -25,10 +25,9 @@ import {firstValueFrom} from "rxjs";
   styleUrl: './post.component.scss'
 })
 export class PostComponent implements OnInit {
+
   post = input<Post>()
-
   postService = inject(PostService);
-
   comments = signal<PostComment[]>([])
 
   async ngOnInit() {
@@ -43,7 +42,10 @@ export class PostComponent implements OnInit {
   //   return dateTime.isValid ? dateTime.toRelative() || 'N/A' : 'Invalid date';
   // }
   async onCreated() {
-    const comments = await firstValueFrom(this.postService.getCommentsByPostId(this.post()!.id))
+    const comments = await firstValueFrom(
+                      this.postService
+                      .getCommentsByPostId(
+                        this.post()!.id))
     this.comments.set(comments)
   }
 }
