@@ -1,11 +1,10 @@
 import {Component, EventEmitter, HostBinding, inject, input, Output, Renderer2} from '@angular/core';
-import {ProfileService} from "../../../data/services/profile.service";
 import {AvatarCircleComponent} from "../../../common-ui/avatar-circle/avatar-circle.component";
 import {NgIf} from "@angular/common";
 import {SvgIconComponent} from "../../../common-ui/svg-icon/svg-icon.component";
-import {PostService} from "../../../data/services/post.service";
 import {FormsModule} from "@angular/forms";
-import {firstValueFrom} from "rxjs";
+import {ProfileService} from "../../../data/services/profile.service";
+
 
 @Component({
   selector: 'app-post-input',
@@ -21,52 +20,33 @@ import {firstValueFrom} from "rxjs";
 })
 export class PostInputComponent {
   r2= inject(Renderer2)
-  postService = inject(PostService);
 
   isCommentInput = input(false)
   postId = input<number>(0)
-  profile = inject(ProfileService).me;
+  profile = inject(ProfileService).me
+
+
+
+  @Output() created = new EventEmitter();
 
   @HostBinding('class.comment')
   get isComment() {
     return this.isCommentInput()
   }
 
-  postText = ''
-   // @Input() isCommentInput: boolean = false;
-
-  @Output() created = new EventEmitter()
+  postText = '';
 
   onTextAreaInput(event:Event) {
-  const textArea = event.target as HTMLTextAreaElement
-
+    const textArea = event.target as HTMLTextAreaElement;
     this.r2.setStyle(textArea, 'height', 'auto');
     this.r2.setStyle(textArea, 'height', textArea.scrollHeight + 'px');
   }
 
   onCreatePost() {
-    if (!this.postText) return
-
-    if(this.isCommentInput()) {
-      firstValueFrom(this.postService.createComment({
-        text: this.postText,
-        authorId: this.profile()!.id,
-        postId: this.postId()
-      }))
-        .then(() => {
-          this.postText = ''
-          this.created.emit()
-        })
-      return;
+    if (this.postText) {
+      this.created.emit(this.postText);
+      this.postText = '';
     }
 
-    firstValueFrom(this.postService.createPost({
-      title:'cool post',
-      content: this.postText,
-      authorId: this.profile()!.id
-    }))
-      .then(() => {
-        this.postText = ''
-      })
   }
 }

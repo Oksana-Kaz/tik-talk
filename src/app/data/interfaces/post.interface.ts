@@ -10,7 +10,7 @@ export interface Post{
   id: number;
   title: string;
   content: string;
-  author: Profile;
+  author: Profile ;
   images: string[];
   createdAt:string;
   updatedAt:string;
@@ -35,6 +35,6 @@ export interface PostComment {
 
 export interface CommentCreateDto {
   text: string;
-  authorId: number;
+  authorId: number | undefined;
   postId: number;
 }

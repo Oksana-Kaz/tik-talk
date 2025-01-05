@@ -7,7 +7,9 @@ import {SvgIconComponent} from "../../../common-ui/svg-icon/svg-icon.component";
 import {PostInputComponent} from "../post-input/post-input.component";
 import {CommentComponent} from "./comment/comment.component";
 import {PostService} from "../../../data/services/post.service";
-import {firstValueFrom} from "rxjs";
+import { firstValueFrom} from "rxjs";
+import {ProfileService} from "../../../data/services/profile.service";
+
 
 
 @Component({
@@ -29,6 +31,7 @@ export class PostComponent implements OnInit {
   post = input<Post>()
   postService = inject(PostService);
   comments = signal<PostComment[]>([])
+  profile=inject(ProfileService).me
 
   async ngOnInit() {
     this.comments.set(this.post()!.comments)
@@ -36,16 +39,23 @@ export class PostComponent implements OnInit {
 
   constructor() {
   }
+
   // getRelativeTime(dateString: string): string {
   //   if (!dateString) return 'N/A'; // Handle cases where the date is missing
   //   const dateTime = DateTime.fromISO(dateString, { zone: 'utc' });
   //   return dateTime.isValid ? dateTime.toRelative() || 'N/A' : 'Invalid date';
   // }
-  async onCreated() {
-    const comments = await firstValueFrom(
-                      this.postService
-                      .getCommentsByPostId(
-                        this.post()!.id))
-    this.comments.set(comments)
-  }
+  async onCreated(commentText: string) {
+      firstValueFrom(this.postService.createComment({
+        authorId: this.profile()!.id,
+        postId: this.post()!.id,
+        text: commentText
+      })).then(async () => {
+        const comments = await firstValueFrom(
+          this.postService
+            .getCommentsByPostId(this.post()!.id))
+        this.comments.set(comments)
+      }).catch((error) => console.error('Error creating comment', error));
+      return;
+    }
 }

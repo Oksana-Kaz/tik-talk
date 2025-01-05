@@ -5,6 +5,8 @@
 }
 
 .messages-wrapper {
- display: grid;
-  grid-gap: 12px;
+  max-height: 450px;
+  overflow-y: scroll;
+  display: grid;
+  grid-gap: 16px;
 }
