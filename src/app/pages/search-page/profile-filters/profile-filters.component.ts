@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProfileService} from "../../../data/services/profile.service";
-import {debounceTime, switchMap} from "rxjs";
+import {debounceTime, Subscription, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-profile-filters',
@@ -23,7 +23,7 @@ export class ProfileFiltersComponent {
     lastName: [''],
     stack:['']
   });
-
+  searchFormSub!: Subscription
   constructor() {
     this.searchForm.valueChanges
       .pipe(
@@ -33,5 +33,8 @@ export class ProfileFiltersComponent {
         })
       )
       .subscribe()
+  }
+  ngOnDestroy() {
+    this.searchFormSub.unsubscribe()
   }
 }

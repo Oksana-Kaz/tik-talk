@@ -11,6 +11,15 @@
   .message-container {
     order: -1;
   }
+  .medium-text{
+    justify-self: flex-end;
+  }
+  .username-message {
+    order: 2;
+  }
+  .time-message {
+    order: 1;
+  }
   .message-text {
     background: var(--primary-color);
     mask: linear-gradient(#000 0 0 ), linear-gradient(-135deg, #000 50%, #0000 0) border-box 100% 100% / 200% 200% no-repeat;
@@ -19,13 +28,23 @@
   }
 }
 
+.message-container {
+  order: 1;
+}
 .message-text {
   padding: 8px 16px;
   background: var(--message-color);
   font-weight: 500;
   color: var(--light-color);
-  width: max-content;
+  width: 230px;
+  overflow: scroll;
   mask: linear-gradient( #000 0  0), linear-gradient(45deg, #000 50%, #0000 0) border-box 100% 100% / 200% 200% no-repeat;
   mask-composite: exclude;
   mask-position:  94% 5%;
 }
+.medium-text {
+  display: flex;
+  gap: 8px;
+}
+
+

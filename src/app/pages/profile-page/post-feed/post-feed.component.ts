@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, inject,  Renderer2} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, inject, OnInit, Renderer2} from '@angular/core';
 import {PostInputComponent} from "../post-input/post-input.component";
 import {PostComponent} from "../post/post.component";
 import {PostService} from "../../../data/services/post.service";
@@ -6,6 +6,7 @@ import {firstValueFrom, fromEvent, throttleTime} from "rxjs";
 import {AvatarCircleComponent} from "../../../common-ui/avatar-circle/avatar-circle.component";
 import {NgIf} from "@angular/common";
 import {ProfileService} from "../../../data/services/profile.service";
+
 
 
 @Component({
@@ -20,7 +21,7 @@ import {ProfileService} from "../../../data/services/profile.service";
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss'
 })
-export class PostFeedComponent {
+export class PostFeedComponent implements  AfterViewInit {
 
   postService = inject(PostService);
   hostElement = inject(ElementRef);
@@ -44,11 +45,10 @@ export class PostFeedComponent {
 
      fromEvent(window, 'resize')
        .pipe(
-       throttleTime(1000)
+       throttleTime(1000),
      )
        .subscribe(() => {
-          console.log(12313)
-
+         this.resizeFeed()
        })
    }
   resizeFeed() {
