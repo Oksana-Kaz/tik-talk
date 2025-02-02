@@ -1,0 +1,46 @@
+<form action="">
+  <h4 class="h4 mb16">Duty assigned</h4>
+
+  <label class="tt-control-label mb16">
+    Date
+    <input class="tt-input" type="text" placeholder="Enter the date " />
+  </label>
+
+  <div style="display: flex; justify-content: space-between">
+    <input class="tt-input" type="checkbox" [value]="ReceiverShift.FIRST" />
+    <label class="tt-control-label mb16">1-ST SHIFT</label>
+    <input class="tt-input" type="checkbox" [value]="ReceiverShift.SECOND" />
+    <label class="tt-control-label mb16">2-ST SHIFT</label>
+    <input class="tt-input" type="checkbox" [value]="ReceiverShift.THIRD" />
+    <label class="tt-control-label mb16">3-ST SHIFT</label>
+  </div>
+
+  <div>
+    @for (group of form.controls.addresses.controls; track group; let i =
+    $index) {
+    <div class="form-grid">
+      <label class="tt-control-label mb16">
+        Unit
+        <input class="tt-input" type="text" placeholder="Enter unit name " />
+      </label>
+
+      <label class="tt-control-label mb16"
+        >Employee's name
+        <input
+          class="tt-input"
+          type="text"
+          placeholder="Enter the employee's name "
+        />
+      </label>
+      <button
+        class="btn"
+        style="grid-column-start: 1; grid-column-end: 3"
+        (click)="deleteAddress(i)"
+      >
+        Удалить
+      </button>
+    </div>
+    }
+    <button class="btn" style="width: 50px" (click)="addAddress()">+</button>
+  </div>
+</form>
