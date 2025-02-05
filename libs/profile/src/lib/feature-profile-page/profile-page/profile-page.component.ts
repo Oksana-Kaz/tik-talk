@@ -11,8 +11,8 @@ import {ProfileService} from './../../data'
 import {toObservable} from "@angular/core/rxjs-interop";
 import {ProfileHeaderComponent} from "../../ui";
 import {PostFeedComponent} from "@tt/posts";
-import {ChatsService} from "@tt/chats";
 import {switchMap} from "rxjs";
+import {ChatsService} from "../../../../../chats/src/lib/data/"
 
 @Component({
   selector: 'app-profile-page',

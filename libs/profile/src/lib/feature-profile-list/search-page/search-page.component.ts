@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import {Profile} from "@tt/interfaces/profile";
 import {ProfileCardComponent} from "../../ui";
-import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component'
-import { ProfileService } from '../../data'
+import {  selectFilteredProfiles } from '../../data';
+import { Store } from '@ngrx/store';
+import { ProfileFiltersComponent } from '@tt/profile';
 
 
 @Component({
@@ -13,12 +13,13 @@ import { ProfileService } from '../../data'
   styleUrl: './search-page.component.scss',
 })
 export class SearchPageComponent {
-  profileService = inject(ProfileService);
-  profiles: Profile[] = [];
+  // profileService = inject(ProfileService); //don't need, because use store
+  store = inject(Store);
+  profiles = this.store.selectSignal(selectFilteredProfiles);
 
   constructor() {
-    this.profileService
-      .getTestAccount()
-      .subscribe((value) => (this.profiles = value));
+    // this.profileService
+    //   .getTestAccount()
+    //   .subscribe((value) => (this.profiles = value));
   }
 }
