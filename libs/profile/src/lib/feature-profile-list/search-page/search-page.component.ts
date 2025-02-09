@@ -17,9 +17,9 @@ export class SearchPageComponent {
   store = inject(Store);
   profiles = this.store.selectSignal(selectFilteredProfiles);
 
-  constructor() {
-    // this.profileService
-    //   .getTestAccount()
-    //   .subscribe((value) => (this.profiles = value));
-  }
+  // constructor() {
+  //   this.profileService
+  //     .getTestAccount()
+  //     .subscribe((value) => (this.profiles = value));
+  // }
 }

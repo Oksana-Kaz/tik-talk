@@ -8,7 +8,7 @@ import { map, switchMap } from 'rxjs';
   providedIn: 'root'
   })
 export class ProfileEffects {
-  profileService= inject(ProfileService);
+  profileService = inject(ProfileService);
   actions$ = inject(Actions);
 
   filterProfiles = createEffect(() => {

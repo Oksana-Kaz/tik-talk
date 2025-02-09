@@ -2,17 +2,17 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  inject,
-  Renderer2,
+  inject, OnInit,
+  Renderer2
 } from '@angular/core';
 import { firstValueFrom, fromEvent, throttleTime } from 'rxjs';
 import { NgIf } from '@angular/common';
-import {PostService} from "../../data";
+import { postActions, PostService, selectAllPosts } from '../../data';
 import {PostInputComponent} from "../../ui";
 import {AvatarCircleComponent} from "@tt/common-ui";
 import {PostComponent} from "../post/post.component";
 import {GlobalStoreService} from "@tt/shared";
-
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-post-feed',
@@ -22,12 +22,13 @@ import {GlobalStoreService} from "@tt/shared";
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
 })
-export class PostFeedComponent implements AfterViewInit {
+export class PostFeedComponent implements AfterViewInit, OnInit {
   postService = inject(PostService);
   hostElement = inject(ElementRef);
   r2 = inject(Renderer2);
+  store = inject(Store);
 
-  feed = this.postService.posts;
+  feed = this.store.selectSignal(selectAllPosts);
   profile = inject(GlobalStoreService).me;
 
   // @HostListener('window:resize')
@@ -35,8 +36,12 @@ export class PostFeedComponent implements AfterViewInit {
   //   this.resizeFeed();
   // }
 
-  constructor() {
-    firstValueFrom(this.postService.fetchPosts());
+  // constructor() {
+  //   firstValueFrom(this.postService.fetchPosts());
+  // }
+
+  ngOnInit() {
+    this.store.dispatch(postActions.fetchPosts({}))
   }
 
   ngAfterViewInit() {
@@ -54,15 +59,21 @@ export class PostFeedComponent implements AfterViewInit {
     this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
   }
 
-  handlePostCreation(postText: string) {
-    firstValueFrom(
-      this.postService.createPost({
+ onCreatePost(postText: string) {
+    this.store.dispatch(postActions.postCreated({
+      payload: {
         title: 'cool post',
         content: postText,
         authorId: this.profile()!.id,
-      })
-    ).then(() => {
-      console.log('Comment created');
-    });
+      }}))
+    // firstValueFrom(
+    //   this.postService.createPost({
+    //     title: 'cool post',
+    //     content: postText,
+    //     authorId: this.profile()!.id,
+    //   })
+    // ).then(() => {
+    //   console.log('Comment created');
+    // });
   }
 }

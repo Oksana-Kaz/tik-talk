@@ -6,3 +6,4 @@ export {
   PostService,
   PostComment
 }
+export * from './store'

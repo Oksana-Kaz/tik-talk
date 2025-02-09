@@ -14,24 +14,32 @@ import {LayoutComponent} from "@tt/layout";
 import {chatsRoutes} from "@tt/chats";
 import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
+import { PostEffects, postFeature } from '@tt/posts';
 
 
 
+// @ts-ignore
 export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'profile/me', pathMatch: 'full' },
-      { path: 'search', component: SearchPageComponent },
-      { path: 'profile/:id', component: ProfilePageComponent },
-      {
-        path: 'settings',
-        component: SettingsPageComponent,
+      { path: 'search',
+        component: SearchPageComponent,
         providers: [
           provideState(profileFeature),
           provideEffects(ProfileEffects)
-        ]
+        ]},
+      { path: 'profile/:id',
+        component: ProfilePageComponent,
+        providers: [
+          provideState(postFeature),
+          provideEffects(PostEffects)
+        ]},
+      {
+        path: 'settings',
+        component: SettingsPageComponent
       },
       {
         path: 'chats',
