@@ -36,4 +36,17 @@ export class PostEffects {
       )
     )
   })
+  commentCreated$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(postActions.commentCreated),
+      switchMap(({payload}) =>
+      this.postService.createComment({
+        authorId:payload.authorId,
+        postId:payload.postId,
+        text:payload.text
+      }).pipe(
+        map(() => postActions.fetchPosts({}))
+      ))
+    )
+  })
 }

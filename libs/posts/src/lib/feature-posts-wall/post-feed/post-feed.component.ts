@@ -23,7 +23,7 @@ import { Store } from '@ngrx/store';
   styleUrl: './post-feed.component.scss',
 })
 export class PostFeedComponent implements AfterViewInit, OnInit {
-  postService = inject(PostService);
+  // postService = inject(PostService);
   hostElement = inject(ElementRef);
   r2 = inject(Renderer2);
   store = inject(Store);
