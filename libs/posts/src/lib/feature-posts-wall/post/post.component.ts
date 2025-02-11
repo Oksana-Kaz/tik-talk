@@ -2,10 +2,11 @@ import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { TimeBackEventPipe } from '../../../../../common-ui/src/lib/pipes/time-back-event.pipe';
 import { DatePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
-import {Post, PostComment, PostService} from "../../data";
+import { Post, postActions } from '../../data';
 import {CommentComponent, PostInputComponent} from "../../ui";
 import {AvatarCircleComponent, SvgIconComponent} from "@tt/common-ui";
 import {GlobalStoreService} from "@tt/shared";
+import { Store } from '@ngrx/store';
 
 
 
@@ -25,13 +26,17 @@ import {GlobalStoreService} from "@tt/shared";
 })
 export class PostComponent implements OnInit {
   post = input<Post>();
-  postService = inject(PostService);
-  comments = signal<PostComment[]>([]);
+  // postService = inject(PostService);
+  // comments = signal<PostComment[]>([]);
   profile = inject(GlobalStoreService).me;
+  store = inject(Store);
 
-  async ngOnInit() {
-    this.comments.set(this.post()!.comments);
-  }
+  // async ngOnInit() {
+  //   this.comments.set(this.post()!.comments);
+  // }
+ngOnInit() {
+  this.store.dispatch(postActions.fetchPosts({}))
+}
 
   constructor() {}
 
@@ -40,21 +45,35 @@ export class PostComponent implements OnInit {
   //   const dateTime = DateTime.fromISO(dateString, { zone: 'utc' });
   //   return dateTime.isValid ? dateTime.toRelative() || 'N/A' : 'Invalid date';
   // }
-  async onCreated(commentText: string) {
-    firstValueFrom(
-      this.postService.createComment({
-        authorId: this.profile()!.id,
-        postId: this.post()!.id,
-        text: commentText,
-      })
-    )
-      .then(async () => {
-        const comments = await firstValueFrom(
-          this.postService.getCommentsByPostId(this.post()!.id)
-        );
-        this.comments.set(comments);
-      })
-      .catch((error) => console.error('Error creating comment', error));
+  // async onCreated(commentText: string) {
+  //   firstValueFrom(
+  //     this.postService.createComment({
+  //       authorId: this.profile()!.id,
+  //       postId: this.post()!.id,
+  //       text: commentText,
+  //     })
+  //   )
+  //     .then(async () => {
+  //       const comments = await firstValueFrom(
+  //         this.postService.getCommentsByPostId(this.post()!.id)
+  //       );
+  //       this.comments.set(comments);
+  //     })
+  //     .catch((error) => console.error('Error creating comment', error));
+  //   return;
+  // }
+  onCreated(commentText: string) {
+  const currentPost = this.post();
+  if (!currentPost) {
+    console.error("Post is not defined.");
     return;
+  }
+   this.store.dispatch(postActions.commentCreated({
+    payload:{
+      authorId: this.profile()?.id,
+      postId: currentPost.id,
+      text: commentText,
+    }
+   }))
   }
 }

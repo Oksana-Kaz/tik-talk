@@ -1,6 +1,6 @@
 import { createActionGroup, props } from '@ngrx/store';
 
-import { Post, PostComment, PostCreateDto } from '../interfaces/post.interface';
+import { CommentCreateDto, Post, PostComment, PostCreateDto } from '../interfaces/post.interface';
 
 export const postActions = createActionGroup({
   source: 'post',
@@ -8,7 +8,7 @@ export const postActions = createActionGroup({
     'fetch posts': props<{page?:number}>(),
     'post created': props<{payload: PostCreateDto }>(),
     'posts loaded': props<{posts: Post[]}>(),
-    'comment created': props<{comment: PostComment}>(),
-    'comments loaded': props<{postId: number; comments: PostComment[]}>(),
+    'comment created': props<{payload: CommentCreateDto}>(),
+    'comments loaded': props<{postId: number; comments: Comment[]}>(),
   }
 })
