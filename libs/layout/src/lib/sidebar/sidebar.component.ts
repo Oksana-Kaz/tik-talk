@@ -1,7 +1,7 @@
 import { AsyncPipe, JsonPipe, NgForOf } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { firstValueFrom, Subscription, timer } from 'rxjs';
+import { firstValueFrom, Subscription, takeUntil, timer } from 'rxjs';
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
 import {ImgUrlPipe, SvgIconComponent} from "@tt/common-ui";
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -54,9 +54,8 @@ export class SidebarComponent  implements OnInit {
   ];
 
   async reconnect() {
-    console.log('reconnecting ...');
    await firstValueFrom(this.profileService.getMe());
-   await firstValueFrom(timer(2000));
+   await firstValueFrom(timer(50000));
    this.connectWs();
   }
    connectWs() {
@@ -67,7 +66,6 @@ export class SidebarComponent  implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       ).subscribe(message => {
         if (isErrorMessage(message)) {
-          console.log('error token');
           this.reconnect();
         }
         })

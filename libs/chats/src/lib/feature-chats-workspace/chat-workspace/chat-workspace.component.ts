@@ -10,6 +10,7 @@ import { ChatsService } from '@tt/data-access';
 import { MessageInputComponent } from '../../ui';
 
 @Component({
+
   selector: 'app-chat-workspace',
   standalone: true,
   imports: [

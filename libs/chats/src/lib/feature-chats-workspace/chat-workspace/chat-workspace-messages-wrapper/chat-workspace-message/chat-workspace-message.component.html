@@ -9,7 +9,8 @@
     <span class="username-message"
       >{{ message.user?.firstName }} {{ message.user?.lastName }}</span
     >
-    <span class="time-message">{{ message.createdAt | date : 'HH:mm' }}</span>
+    <span class="time-message"
+    >{{ message.createdAt | date : 'HH:mm' }}</span>
   </strong>
   <div class="message-text medium-text">
     {{ message.text }}
