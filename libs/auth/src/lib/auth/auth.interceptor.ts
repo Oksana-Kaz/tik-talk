@@ -1,6 +1,5 @@
 import {
   HttpHandlerFn,
-  HttpInterceptor,
   HttpInterceptorFn,
   HttpRequest,
 } from '@angular/common/http';
@@ -13,7 +12,8 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import {AuthService} from "@tt/auth";
+import { AuthService } from '@tt/data-access';
+
 
 let isRefreshing$ = new BehaviorSubject(false);
 

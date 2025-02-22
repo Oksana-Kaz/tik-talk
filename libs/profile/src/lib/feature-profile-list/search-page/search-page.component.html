@@ -1,7 +1,19 @@
-<app-profile-filters></app-profile-filters>
+<tt-profile-filters></tt-profile-filters>
 
-<div class="profile-card__wrapper">
-  @for (profile of profiles(); track profile.id) {
-  <app-profile-card [profile]="profile"></app-profile-card>
-  }
+<div class="profile-card__wrapper" waIntersectionObserver waIntersectionThreshold="0.2">
+  @for (profile of profiles(); track profile.id; let last = $last) {
+
+      <app-profile-card
+        (waIntersectionObservee) = "last ? onIntersaction($event) : null"
+        [profile]="profile"></app-profile-card>
+   }
 </div>
+
+<!--@if (last) {-->
+<!--@defer (on viewport) {-->
+<!--  <tt-infinite-scroll-trigger-->
+<!--    (loaded) = "timeToFetch()"-->
+<!--  ></tt-infinite-scroll-trigger>-->
+<!--} @placeholder {-->
+<!--  <div></div>-->
+<!--}-->

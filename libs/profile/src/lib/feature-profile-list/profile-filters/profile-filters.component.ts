@@ -1,17 +1,18 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith, Subscription } from 'rxjs';
-import { profileActions} from '@tt/profile';
 import { Store } from '@ngrx/store';
+import { profileActions } from '../../data';
+
 
 @Component({
-  selector: 'app-profile-filters',
+  selector: 'tt-profile-filters',
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './profile-filters.component.html',
   styleUrl: './profile-filters.component.scss',
 })
-export class ProfileFiltersComponent {
+export class ProfileFiltersComponent  implements OnDestroy {
   fb = inject(FormBuilder);
   // profileService = inject(ProfileService);
   store = inject(Store);

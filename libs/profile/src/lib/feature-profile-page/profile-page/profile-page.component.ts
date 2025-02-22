@@ -7,12 +7,12 @@ import {
 } from '@angular/router';
 import { AsyncPipe, NgForOf } from '@angular/common';
 import {ImgUrlPipe, SvgIconComponent} from "@tt/common-ui";
-import {ProfileService} from './../../data'
 import {toObservable} from "@angular/core/rxjs-interop";
 import {ProfileHeaderComponent} from "../../ui";
 import {PostFeedComponent} from "@tt/posts";
 import {switchMap} from "rxjs";
-import {ChatsService} from "../../../../../chats/src/lib/data/"
+import { ChatsService, ProfileService } from '@tt/data-access';
+
 
 @Component({
   selector: 'app-profile-page',
@@ -33,6 +33,7 @@ import {ChatsService} from "../../../../../chats/src/lib/data/"
 export class ProfilePageComponent {
   profileService = inject(ProfileService);
   route = inject(ActivatedRoute);
+
   chatsService = inject(ChatsService);
   router = inject(Router);
 

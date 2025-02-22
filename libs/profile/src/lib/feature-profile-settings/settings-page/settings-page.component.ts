@@ -1,13 +1,21 @@
 import { Component, effect, inject, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { ProfileService} from "@tt/profile";
 import {AvatarUploadComponent, ProfileHeaderComponent} from "../../ui";
+import { ProfileService } from '@tt/data-access';
+import { StackInputComponent } from '@tt/common-ui';
+
+
 
 @Component({
   selector: 'app-settings-page',
   standalone: true,
-  imports: [ProfileHeaderComponent, ReactiveFormsModule, AvatarUploadComponent],
+  imports: [
+    ProfileHeaderComponent,
+    ReactiveFormsModule,
+    AvatarUploadComponent,
+    StackInputComponent,
+  ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
 })
@@ -22,7 +30,7 @@ export class SettingsPageComponent {
     lastName: ['', Validators.required],
     username: [{ value: '', disabled: true }, Validators.required],
     description: [''],
-    stack: [''],
+    stack: [{ value: '', disabled: false }],
   });
 
   constructor() {
@@ -30,13 +38,13 @@ export class SettingsPageComponent {
       //@ts-ignore
       this.form.patchValue({
         ...this.profileService.me(),
-        //@ts-ignore
-        stack: this.mergeStack(this.profileService.me()?.stack),
+
+        // stack: this.mergeStack(this.profileService.me()?.stack),
       });
     });
   }
 
-  ngAfterViewInit() {}
+  // ngAfterViewInit() {}
   onSave() {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
@@ -50,27 +58,26 @@ export class SettingsPageComponent {
       );
     }
 
-
     firstValueFrom(
       //@ts-ignore
       this.profileService.patchProfile({
         ...this.form.value,
-        stack: this.splitStack(this.form.value.stack),
+        // stack: this.splitStack(this.form.value.stack),
       })
     );
   }
 
-  splitStack(stack: string | null | undefined | string[]): string[] {
-    if (!stack) return [];
-    if (Array.isArray(stack)) return stack;
-
-    return stack.split(',');
-  }
-
-  mergeStack(stack: string | null | string[] | undefined) {
-    if (!stack) return '';
-    if (Array.isArray(stack)) return stack.join(',');
-
-    return stack;
-  }
+  // splitStack(stack: string | null | undefined | string[]): string[] {
+  //   if (!stack) return [];
+  //   if (Array.isArray(stack)) return stack;
+  //
+  //   return stack.split(',');
+  // }
+  //
+  // mergeStack(stack: string | null | string[] | undefined) {
+  //   if (!stack) return '';
+  //   if (Array.isArray(stack)) return stack.join(',');
+  //
+  //   return stack;
+  // }
 }

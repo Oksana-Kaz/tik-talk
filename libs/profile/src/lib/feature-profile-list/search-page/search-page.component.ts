@@ -1,14 +1,23 @@
 import { Component, inject } from '@angular/core';
 import {ProfileCardComponent} from "../../ui";
-import {  selectFilteredProfiles } from '../../data';
+import { profileActions, selectFilteredProfiles } from '../../data';
 import { Store } from '@ngrx/store';
-import { ProfileFiltersComponent } from '@tt/profile';
+import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
+import { last } from 'rxjs';
+import { InfiniteScrollTriggerComponent } from '@tt/common-ui';
+import { WaIntersectionObservee, WaIntersectionObserverDirective } from '@ng-web-apis/intersection-observer';
 
 
 @Component({
-  selector: 'app-search-page',
+  selector: 'tt-search-page',
   standalone: true,
-  imports: [ProfileCardComponent, ProfileFiltersComponent],
+  imports: [
+    ProfileCardComponent,
+    ProfileFiltersComponent,
+    InfiniteScrollTriggerComponent,
+    WaIntersectionObserverDirective,
+    WaIntersectionObservee,
+  ],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
 })
@@ -22,4 +31,16 @@ export class SearchPageComponent {
   //     .getTestAccount()
   //     .subscribe((value) => (this.profiles = value));
   // }
+  protected readonly last = last;
+
+  timeToFetch() {
+    this.store.dispatch(profileActions.setPage({}));
+  }
+  onIntersaction(entries: IntersectionObserverEntry[]) {
+
+    if (!entries.length)  return;
+    if (entries[0].intersectionRatio > 0) {
+        this.timeToFetch();
+    }
+  }
 }

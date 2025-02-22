@@ -8,7 +8,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import {AvatarCircleComponent, SvgIconComponent} from "@tt/common-ui";
-import {ProfileService} from "@tt/profile";
+import { GlobalStoreService } from '@tt/data-access';
 
 @Component({
   selector: 'app-message-input',
@@ -19,7 +19,7 @@ import {ProfileService} from "@tt/profile";
 })
 export class MessageInputComponent {
   r2 = inject(Renderer2);
-  me = inject(ProfileService).me;
+  me = inject(GlobalStoreService).me;
 
   @Output() created = new EventEmitter<string>();
 

@@ -8,7 +8,8 @@ export const postActions = createActionGroup({
     'fetch posts': props<{page?:number}>(),
     'post created': props<{payload: PostCreateDto }>(),
     'posts loaded': props<{posts: Post[]}>(),
+    'fetch comments': props<{postId: number}>(),
     'comment created': props<{payload: CommentCreateDto}>(),
-    'comments loaded': props<{postId: number; comments: Comment[]}>(),
+    'comments loaded': props<{comments: PostComment[]}>(),
   }
 })

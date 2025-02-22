@@ -4,7 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { map, startWith, switchMap } from 'rxjs';
 import {ChatsBtnComponent} from "../chats-btn/chats-btn.component";
-import {ChatsService} from "../../data/services/chats.service";
+import { ChatsService } from '@tt/data-access';
 
 
 @Component({
