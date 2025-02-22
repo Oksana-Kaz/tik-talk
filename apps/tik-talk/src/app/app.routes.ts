@@ -1,20 +1,20 @@
 import { Routes } from '@angular/router';
 import { ExperimentalPageComponent } from './pages/experimental-page/experimental-page.component';
-import { SchedulePageComponent } from './pages/schedule-page/schedule-page.component';
 import { FormsTVRepairComponent } from './pages/experimental-page/forms-tv-repair/forms-tv-repair.component';
 import {canActivateAuth, LoginPageComponent} from "@tt/auth";
-import {
-  ProfileEffects,
-  profileFeature,
-  ProfilePageComponent,
-  SearchPageComponent,
-  SettingsPageComponent
-} from '@tt/profile';
 import {LayoutComponent} from "@tt/layout";
 import {chatsRoutes} from "@tt/chats";
 import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { PostEffects, postFeature } from '@tt/posts';
+import {
+  ProfileEffects,
+  profileFeature,
+  ProfilePageComponent,
+  SearchPageComponent,
+  SettingsPageComponent,
+} from '@tt/profile';
+import { SchedulePageComponent } from './pages/schedule-page/schedule-page.component';
 
 
 

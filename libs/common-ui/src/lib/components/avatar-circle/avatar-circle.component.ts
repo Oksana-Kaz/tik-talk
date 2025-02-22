@@ -1,5 +1,6 @@
-import { Component, input } from '@angular/core';
+
 import { ImgUrlPipe } from '../../pipes';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-avatar-circle',

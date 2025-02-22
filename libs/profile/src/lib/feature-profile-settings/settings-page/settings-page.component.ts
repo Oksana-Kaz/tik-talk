@@ -1,8 +1,10 @@
 import { Component, effect, inject, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { ProfileService} from "@tt/profile";
 import {AvatarUploadComponent, ProfileHeaderComponent} from "../../ui";
+import { ProfileService } from '@tt/data-access';
+
+
 
 @Component({
   selector: 'app-settings-page',
@@ -27,16 +29,16 @@ export class SettingsPageComponent {
 
   constructor() {
     effect(() => {
-      //@ts-ignore
+
       this.form.patchValue({
         ...this.profileService.me(),
-        //@ts-ignore
+
         stack: this.mergeStack(this.profileService.me()?.stack),
       });
     });
   }
 
-  ngAfterViewInit() {}
+  // ngAfterViewInit() {}
   onSave() {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
