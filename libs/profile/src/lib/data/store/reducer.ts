@@ -1,6 +1,8 @@
-import { Profile } from '@tt/interfaces/profile';
+
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { profileActions } from './actions';
+import { Profile } from '@tt/data-access';
+
 
 export interface ProfileState {
   profiles: Profile[];

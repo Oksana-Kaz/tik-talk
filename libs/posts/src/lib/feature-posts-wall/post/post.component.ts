@@ -1,12 +1,12 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
-import { TimeBackEventPipe } from '../../../../../common-ui/src/lib/pipes/time-back-event.pipe';
+import { Component, inject, input, OnInit } from '@angular/core';
+
 import { DatePipe } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
-import { Post, postActions } from '../../data';
+import { Post, postActions} from '../../data';
 import {CommentComponent, PostInputComponent} from "../../ui";
 import {AvatarCircleComponent, SvgIconComponent} from "@tt/common-ui";
 import {GlobalStoreService} from "@tt/shared";
 import { Store } from '@ngrx/store';
+import { TimeBackEventPipe } from '../../../../../common-ui/src/lib/pipes/time-back-event.pipe';
 
 
 
@@ -30,7 +30,7 @@ export class PostComponent implements OnInit {
   // comments = signal<PostComment[]>([]);
   profile = inject(GlobalStoreService).me;
   store = inject(Store);
-
+  // comments = this.store.selectSignal(selectCommentByPostId(this.post()!.id));
   // async ngOnInit() {
   //   this.comments.set(this.post()!.comments);
   // }

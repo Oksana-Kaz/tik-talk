@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith, Subscription } from 'rxjs';
-import { profileActions} from '@tt/profile';
 import { Store } from '@ngrx/store';
+import { profileActions } from '@tt/profile';
 
 @Component({
   selector: 'app-profile-filters',

@@ -25,7 +25,7 @@ export const postFeature = createFeature({
       posts
       }
     }),
-    on(postActions.commentsLoaded, (state,{postId,comments}) => ({
+    on(postActions.commentsLoaded, (state,{comments}) => ({
       ...state,
         comments:{
         ...state.comments,
