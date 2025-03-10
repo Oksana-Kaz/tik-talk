@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormsExperimentComponent } from './forms-experiment/forms-experiment.component';
+import { FormsExperimentComponent } from '../forms-experiment/forms-experiment.component';
+
 
 @Component({
   selector: 'app-experimental-page',

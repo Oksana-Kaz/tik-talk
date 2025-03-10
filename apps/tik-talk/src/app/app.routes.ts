@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { ExperimentalPageComponent } from './pages/experimental-page/experimental-page.component';
-import { FormsTVRepairComponent } from './pages/experimental-page/forms-tv-repair/forms-tv-repair.component';
 import {canActivateAuth, LoginPageComponent} from "@tt/auth";
 import {LayoutComponent} from "@tt/layout";
+import {FormsTVRepairComponent} from "@tt/experimental";
+import {ExperimentalPageComponent} from "@tt/experimental";
 import {chatsRoutes} from "@tt/chats";
 import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -14,7 +14,6 @@ import {
   SearchPageComponent,
   SettingsPageComponent,
 } from '@tt/profile';
-import { SchedulePageComponent } from './pages/schedule-page/schedule-page.component';
 
 
 
@@ -50,6 +49,5 @@ export const routes: Routes = [
   },
   { path: 'login', component: LoginPageComponent },
   { path: 'experimental', component: ExperimentalPageComponent },
-  { path: 'schedule', component: SchedulePageComponent },
   { path: 'tv-repair', component: FormsTVRepairComponent },
 ];
