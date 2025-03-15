@@ -2,14 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  AbstractControl,
   FormArray,
   FormControl,
   FormGroup,
   FormRecord,
-  ReactiveFormsModule,
-  Validators,
+  ReactiveFormsModule, ValidatorFn,
+  Validators
 } from '@angular/forms';
 import { Feature, MockService } from '../experimental/mock.service';
+import { strings } from '@angular-devkit/core';
+import { NameValidator } from './name.validator';
+import { validateDateRange } from './date-range.validator';
+import { Observable } from 'rxjs';
 
 enum ReceiverType {
   PERSON = 'PERSON',
@@ -32,6 +37,16 @@ function getAddressForm(initialValue: Address = {}) {
   });
 }
 
+function validateStartWith(forbiddenLetter: string): ValidatorFn {
+  return (control:AbstractControl) => {
+    return control.value.startsWith(forbiddenLetter)
+      ? { startsWith: {message:`${forbiddenLetter} - последняя буква алфавита`}}
+      : null;
+  }
+}
+
+
+
 @Component({
   selector: 'tt-forms-experiment',
   standalone: true,
@@ -43,15 +58,24 @@ export class FormsExperimentComponent {
   ReceiverType = ReceiverType;
 
   mockService = inject(MockService);
+  nameValidator = inject(NameValidator);
   features: Feature[] = [];
 
   form = new FormGroup({
     type: new FormControl<ReceiverType>(ReceiverType.PERSON),
-    name: new FormControl<string>('', Validators.required),
+    name: new FormControl<string>('', {
+      validators: [Validators.required],
+      asyncValidators: [this.nameValidator.validate.bind(this.nameValidator)],
+      updateOn: 'blur'
+    }, ),
     inn: new FormControl<string>(''),
     lastName: new FormControl<string>('ЗНАЧЕНИЕ'),
     addresses: new FormArray([getAddressForm()]),
     feature: new FormRecord({}),
+    dateRange: new FormGroup({
+      from:new FormControl<string>(''),
+      to: new FormControl<string>(''),
+    }, validateDateRange({fromControlName:'from',toControlName:'to'}))
   });
 
   constructor() {
@@ -72,6 +96,7 @@ export class FormsExperimentComponent {
         // this.form.controls.addresses.setControl(1, getAddressForm())
         // console.log(this.form.controls.addresses.at(0))
       });
+
 
     this.mockService
       .getFeatures()
