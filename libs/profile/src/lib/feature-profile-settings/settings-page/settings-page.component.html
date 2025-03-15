@@ -33,10 +33,18 @@
       <app-avatar-upload></app-avatar-upload>
     </label>
 
-    <label class="tt-form-label">
-      <span class="tt-form-label__text">Навыки</span>
-      <input type="text" class="tt-form-input" formControlName="stack" />
-    </label>
+    <a class="btn to-setting-btn" [routerLink]="['/tv-repair']">
+      Experience
+      <svg icon="arrow-up" class="to-setting-icon"></svg>
+    </a>
+
+<!--    <label class="tt-form-label">-->
+<!--      <span class="tt-form-label__text">Навыки(stack)</span>-->
+<!--     <input type="text" class="tt-form-input" formControlName="stack" />&ndash;&gt;-->
+<!--    </label>-->
+    <tt-stack-input formControlName="stack"></tt-stack-input>
+
+    <tt-address-input formControlName="city"></tt-address-input>
   </div>
 
   <div>

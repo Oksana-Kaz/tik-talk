@@ -3,8 +3,6 @@ import {AvatarCircleComponent} from "@tt/common-ui";
 import { Profile } from '@tt/data-access';
 
 
-
-
 @Component({
   selector: 'app-chat-workspace-header',
   standalone: true,

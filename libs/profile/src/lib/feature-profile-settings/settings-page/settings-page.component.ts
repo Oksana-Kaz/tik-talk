@@ -3,13 +3,23 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import {AvatarUploadComponent, ProfileHeaderComponent} from "../../ui";
 import { ProfileService } from '@tt/data-access';
+import { AddressInputComponent, StackInputComponent, SvgIconComponent } from '@tt/common-ui';
+import { RouterLink } from '@angular/router';
 
 
 
 @Component({
   selector: 'app-settings-page',
   standalone: true,
-  imports: [ProfileHeaderComponent, ReactiveFormsModule, AvatarUploadComponent],
+  imports: [
+    ProfileHeaderComponent,
+    ReactiveFormsModule,
+    AvatarUploadComponent,
+    StackInputComponent,
+    AddressInputComponent,
+    SvgIconComponent,
+    RouterLink,
+  ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
 })
@@ -24,16 +34,17 @@ export class SettingsPageComponent {
     lastName: ['', Validators.required],
     username: [{ value: '', disabled: true }, Validators.required],
     description: [''],
-    stack: [''],
+    stack: [{ value: '', disabled: false }],
+    city: [null],
   });
 
   constructor() {
     effect(() => {
-
+      //@ts-ignore
       this.form.patchValue({
         ...this.profileService.me(),
 
-        stack: this.mergeStack(this.profileService.me()?.stack),
+        // stack: this.mergeStack(this.profileService.me()?.stack),
       });
     });
   }
@@ -52,27 +63,26 @@ export class SettingsPageComponent {
       );
     }
 
-
     firstValueFrom(
       //@ts-ignore
       this.profileService.patchProfile({
         ...this.form.value,
-        stack: this.splitStack(this.form.value.stack),
+        // stack: this.splitStack(this.form.value.stack),
       })
     );
   }
 
-  splitStack(stack: string | null | undefined | string[]): string[] {
-    if (!stack) return [];
-    if (Array.isArray(stack)) return stack;
-
-    return stack.split(',');
-  }
-
-  mergeStack(stack: string | null | string[] | undefined) {
-    if (!stack) return '';
-    if (Array.isArray(stack)) return stack.join(',');
-
-    return stack;
-  }
+  // splitStack(stack: string | null | undefined | string[]): string[] {
+  //   if (!stack) return [];
+  //   if (Array.isArray(stack)) return stack;
+  //
+  //   return stack.split(',');
+  // }
+  //
+  // mergeStack(stack: string | null | string[] | undefined) {
+  //   if (!stack) return '';
+  //   if (Array.isArray(stack)) return stack.join(',');
+  //
+  //   return stack;
+  // }
 }

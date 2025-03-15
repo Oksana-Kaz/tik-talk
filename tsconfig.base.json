@@ -27,7 +27,7 @@
       "@tt/posts": ["libs/posts/src/index.ts"],
       "@tt/profile": ["libs/profile/src/index.ts"],
       "@tt/shared": ["libs/shared/src/index.ts"],
-
+      "@tt/experimental": ["libs/experimental/src/index.ts"]
     },
     "baseUrl": ".",
     "rootDir": "."

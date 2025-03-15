@@ -60,6 +60,7 @@
     },
     "@nx/angular:component": {
       "style": "scss",
+      "prefix": "app",
       "skipTests": true,
       "standalone": true
     }

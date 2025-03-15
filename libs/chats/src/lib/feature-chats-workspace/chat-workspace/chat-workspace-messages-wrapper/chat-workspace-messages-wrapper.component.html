@@ -1,8 +1,8 @@
 <div class="messages-wrapper">
-  @for (dateGroup of messages() | keyvalue ; track dateGroup) {
-  <div class="date-header">{{ dateGroup.key }}</div>
+  @for (dateGroup of messages() ; track dateGroup) {
+  <div class="date-header">{{ dateGroup[0] }}</div>
 
-  @for (message of dateGroup.value ; track message.id) {
+  @for (message of dateGroup[1]; track message.id) {
 
   <app-chat-workspace-message [message]="message"></app-chat-workspace-message>
   } }

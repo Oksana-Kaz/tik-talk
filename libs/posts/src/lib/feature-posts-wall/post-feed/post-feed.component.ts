@@ -5,14 +5,15 @@ import {
   inject, OnInit,
   Renderer2
 } from '@angular/core';
-import { firstValueFrom, fromEvent, throttleTime } from 'rxjs';
+import {  fromEvent, throttleTime } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { postActions, PostService, selectAllPosts } from '../../data';
+import { postActions,  selectAllPosts } from '../../data';
 import {PostInputComponent} from "../../ui";
 import {AvatarCircleComponent} from "@tt/common-ui";
 import {PostComponent} from "../post/post.component";
-import {GlobalStoreService} from "@tt/shared";
+
 import { Store } from '@ngrx/store';
+import { GlobalStoreService } from '@tt/data-access';
 
 @Component({
   selector: 'app-post-feed',
