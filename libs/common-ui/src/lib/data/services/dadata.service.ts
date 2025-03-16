@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DADATA_TOKEN } from './token';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { DadataSuggestion } from '../interfaces/dadata.interface';
 
 @Injectable({
@@ -19,13 +19,15 @@ export class DadataService {
       }
     }).pipe(
       map(res => {
-        return Array.from(
-          new Set(
-            res.suggestions.map(suggestion => {
-              return suggestion.data.city
-            })
-          )
-        )
+         return res.suggestions
+        // return Array.from(
+        //   new Set(
+        //     res.suggestions.map(
+        //       ( suggestion) => {
+        //       return suggestion.data.city
+        //     })
+        //   )
+      //   )
       })
     )
   }

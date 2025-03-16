@@ -19,9 +19,19 @@
     />
   </label>
 
+  @if (form.controls.name.touched && form.controls.name.hasError('startsWith')) {
+  <small>{{ form.controls.name.getError('startsWith')?.message }}</small>
+  }
+
   @if (form.controls.name.touched && form.controls.name.hasError('required')) {
   <small>Это поле обязательно!</small>
-  } @if (form.controls.type.value === ReceiverType.LEGAL) {
+  }
+
+  @if (form.controls.name.touched && form.controls.name.hasError('nameValid')) {
+  <small>{{ form.controls.name.getError('nameValid')?.message }}</small>
+  }
+
+  @if (form.controls.type.value === ReceiverType.LEGAL) {
   <label class="tt-control-label mb16">
     ИНН
     <input
@@ -41,6 +51,32 @@
       placeholder="Введите фамилию"
     />
   </label>
+  }
+
+  <div style="display: flex; justify-content: space-between">
+    <h4 class="h6 mb16">Период доставки</h4>
+  </div>
+<div class="two-columns" formGroupName="dateRange">
+  <label class="tt-control-label mb16">
+ От
+    <input
+      formControlName="from"
+      class="tt-input"
+      type="date"
+    />
+  </label>
+  <label class="tt-control-label mb16">
+    До
+    <input
+      formControlName="to"
+      class="tt-input"
+      type="date"
+    />
+  </label>
+</div>
+
+  @if (form.controls.dateRange.touched && form.controls.dateRange.hasError('dateRange')) {
+    <small>{{ form.controls.dateRange.getError('dateRange')?.message }}</small>
   }
 
   <div>

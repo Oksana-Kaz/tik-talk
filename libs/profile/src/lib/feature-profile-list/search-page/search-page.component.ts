@@ -8,6 +8,7 @@ import { InfiniteScrollTriggerComponent } from '@tt/common-ui';
 import { WaIntersectionObservee, WaIntersectionObserverDirective } from '@ng-web-apis/intersection-observer';
 
 
+
 @Component({
   selector: 'tt-search-page',
   standalone: true,

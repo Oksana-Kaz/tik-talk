@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Renderer2 } from '@angular/core';
 import {
   FormArray,
   FormControl,
@@ -11,6 +11,9 @@ import { Feature, MockService } from '../experimental/mock.service';
 import { KeyValuePipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { group } from '@angular/animations';
+import { validateDateRange } from '../forms-experiment/date-range.validator';
+import { fromEvent, throttleTime } from 'rxjs';
+import { AddressInputComponent } from '@tt/common-ui';
 
 interface Address {
   city?: string;
@@ -31,13 +34,16 @@ function getAddressForm(initialValue: Address = {}) {
 @Component({
   selector: 'app-forms-tv-repair',
   standalone: true,
-  imports: [ReactiveFormsModule, KeyValuePipe],
+  imports: [ReactiveFormsModule, KeyValuePipe, AddressInputComponent],
   templateUrl: './forms-tv-repair.component.html',
   styleUrl: './forms-tv-repair.component.scss',
 })
-export class FormsTVRepairComponent {
+export class FormsTVRepairComponent implements AfterViewInit {
   features: Feature[] = [];
   types: { key: string; value: string }[] = [];
+
+  hostElement = inject(ElementRef);
+  r2 = inject(Renderer2);
 
   mockService = inject(MockService);
 
@@ -45,7 +51,13 @@ export class FormsTVRepairComponent {
     type: new FormRecord({}),
     name: new FormControl<string>('', Validators.required),
     cause: new FormControl<string>(''),
-    date: new FormControl<string>('ЗНАЧЕНИЕ'),
+    dateRange: new FormGroup(
+      {
+        from: new FormControl<string>(''),
+        to: new FormControl<string>(''),
+      },
+      validateDateRange({ fromControlName: 'from', toControlName: 'to' })
+    ),
     warranty: new FormControl<string>('ЗНАЧЕНИЕ'),
     addresses: new FormArray([getAddressForm()]),
     feature: new FormRecord({}),
@@ -111,4 +123,19 @@ export class FormsTVRepairComponent {
   sort = () => 0;
 
   protected readonly group = group;
+
+  ngAfterViewInit() {
+    this.resizeFeed();
+
+    fromEvent(window, 'resize')
+      .pipe(throttleTime(1000))
+      .subscribe(() => {
+        this.resizeFeed();
+      });
+  }
+  resizeFeed() {
+    const { top } = this.hostElement.nativeElement.getBoundingClientRect();
+    const height = window.innerHeight - top - 4 - 4;
+    this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
+  }
 }

@@ -28,31 +28,43 @@
       placeholder="Введите причину"
     />
   </label>
-  <div class="form-grid">
+  <div class="form-grid" formGroupName="dateRange">
     <label class="tt-control-label mb16">
       Дата обращения
       <input
-        formControlName="date"
+        formControlName="from"
         class="tt-input"
-        type="text"
-        placeholder="Введите причину"
-      /> </label
-    ><label class="tt-control-label mb16">
+        type="date"
+      />
+    </label>
+    <label class="tt-control-label mb16">
       Срок гарантии
       <input
         formControlName="warranty"
         class="tt-input"
-        type="text"
-        placeholder="Введите причину"
+        type="date"
+      />
+    </label>
+    <label class="tt-control-label mb16">
+      Дата выдачи
+      <input
+        formControlName="to"
+        class="tt-input"
+        type="date"
       />
     </label>
   </div>
+
+  @if (form.controls.dateRange.touched && form.controls.dateRange.hasError('dateRange')) {
+    <small>{{ form.controls.dateRange.getError('dateRange')?.message }}</small>
+  }
 
   <div>
     <div style="display: flex; justify-content: space-between">
       <h4 class="h6 mb16">Адрес доставки</h4>
       <button class="btn" style="width: 50px" (click)="addAddress()">+</button>
     </div>
+    <tt-address-input formControlName="city"></tt-address-input>
 
     @for (group of form.controls.addresses.controls; track group; let i =
     $index) {
