@@ -3,7 +3,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import {AvatarUploadComponent, ProfileHeaderComponent} from "../../ui";
 import { ProfileService } from '@tt/data-access';
-import { StackInputComponent } from '@tt/common-ui';
+import { AddressInputComponent, StackInputComponent, SvgIconComponent } from '@tt/common-ui';
+import { RouterLink } from '@angular/router';
 
 
 
@@ -15,6 +16,9 @@ import { StackInputComponent } from '@tt/common-ui';
     ReactiveFormsModule,
     AvatarUploadComponent,
     StackInputComponent,
+    AddressInputComponent,
+    SvgIconComponent,
+    RouterLink,
   ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
@@ -31,6 +35,7 @@ export class SettingsPageComponent {
     username: [{ value: '', disabled: true }, Validators.required],
     description: [''],
     stack: [{ value: '', disabled: false }],
+    city: [null],
   });
 
   constructor() {
