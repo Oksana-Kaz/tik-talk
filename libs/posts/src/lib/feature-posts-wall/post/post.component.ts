@@ -9,6 +9,8 @@ import { TimeBackEventPipe } from '../../../../../common-ui/src/lib/pipes/time-b
 
 import { GlobalStoreService } from '@tt/data-access';
 
+import { GlobalStoreService } from '@tt/data-access';
+
 
 
 @Component({
