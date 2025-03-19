@@ -122,8 +122,6 @@ export class FormsTVRepairComponent implements AfterViewInit {
 
   sort = () => 0;
 
-  protected readonly group = group;
-
   ngAfterViewInit() {
     this.resizeFeed();
 

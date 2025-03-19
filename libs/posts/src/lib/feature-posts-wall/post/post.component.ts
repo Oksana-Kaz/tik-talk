@@ -1,14 +1,9 @@
 import { Component, inject, input, OnInit } from '@angular/core';
-
 import { DatePipe } from '@angular/common';
 import { Post, postActions} from '../../data';
 import {CommentComponent, PostInputComponent} from "../../ui";
 import { AvatarCircleComponent, SvgIconComponent, TimeBackEventPipe } from '@tt/common-ui';
 import { Store } from '@ngrx/store';
-import { TimeBackEventPipe } from '../../../../../common-ui/src/lib/pipes/time-back-event.pipe';
-
-import { GlobalStoreService } from '@tt/data-access';
-
 import { GlobalStoreService } from '@tt/data-access';
 
 
